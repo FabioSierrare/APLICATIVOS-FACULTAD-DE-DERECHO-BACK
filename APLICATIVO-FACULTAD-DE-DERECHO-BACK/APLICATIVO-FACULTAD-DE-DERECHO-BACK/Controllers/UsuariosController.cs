@@ -15,6 +15,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
             _usuarios = usuarios;
         }
 
+
         [HttpGet("GetUsuarios")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
