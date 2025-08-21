@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\APLICATIVO-FACULTAD-DE-DERECHO-BACK.props" />
+</Project>
