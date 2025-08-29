@@ -2,6 +2,7 @@
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces;
+using System.Diagnostics;
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 {
@@ -22,7 +23,10 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetRol()
         {
+            var sw = Stopwatch.StartNew();
             var roles = await _rolRepository.GetRol();
+            sw.Stop();
+            Console.WriteLine($"GetRol executed in {sw.ElapsedMilliseconds} ms");
             return Ok(roles);
         }
 

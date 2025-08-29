@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
+using System.Diagnostics;
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 {
@@ -21,7 +22,10 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetTiposDocumento()
         {
+            var sw = Stopwatch.StartNew();
             var response = await _tiposDocumento.GetTiposDocumentos();
+            sw.Stop();
+            Console.WriteLine($"GetTiposDocumento executed in {sw.ElapsedMilliseconds} ms");
             return Ok(response);
         }
 

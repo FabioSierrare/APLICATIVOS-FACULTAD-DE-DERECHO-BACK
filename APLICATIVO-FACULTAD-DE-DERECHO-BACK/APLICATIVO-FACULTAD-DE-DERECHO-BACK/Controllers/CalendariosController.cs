@@ -3,6 +3,7 @@ using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories;
+using System.Diagnostics;
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 {
@@ -23,7 +24,10 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> GetCalendarios()
         {
+            var sw = Stopwatch.StartNew();
             var response = await _calendarios.GetCalendarios();
+            sw.Stop();
+            Console.WriteLine($"GetCalendarios executed in {sw.ElapsedMilliseconds} ms");
             return Ok(response);
         }
 

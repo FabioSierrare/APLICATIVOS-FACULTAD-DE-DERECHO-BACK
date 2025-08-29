@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
+using System.Diagnostics;
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 {
@@ -18,7 +19,10 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
         [HttpGet("GetUsuarioConsultorio")]
         public async Task<IActionResult> GetUsuariosConsultorios()
         {
+            var sw = Stopwatch.StartNew();
             var data = await usuariosConsultorios.GetUsuariosConsultorios();
+            sw.Stop();
+            Console.WriteLine($"GetUsuariosConsultorios executed in {sw.ElapsedMilliseconds} ms");
             return Ok(data);
         }
 
