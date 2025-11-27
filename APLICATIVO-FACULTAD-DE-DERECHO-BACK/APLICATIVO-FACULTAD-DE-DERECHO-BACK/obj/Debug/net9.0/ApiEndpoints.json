@@ -533,6 +533,38 @@
     ]
   },
   {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.CorreoController",
+    "Method": "EnviarCorreo",
+    "RelativePath": "api/Correo/EnviarCorreo",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correo",
+        "Type": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.Correo",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.CorreoController",
+    "Method": "EnviarCorreosMasivos",
+    "RelativePath": "api/Correo/EnviarCorreosMasivos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "correos",
+        "Type": "System.Collections.Generic.List\u00601[[APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.Correo, APLICATIVO-FACULTAD-DE-DERECHO-BACK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.LimitesTurnosConsultorioController",
     "Method": "DeleteLimitesTurnosConsultorio",
     "RelativePath": "api/LimitesTurnosConsultorio/DeleteLimitesTurnosConsultorio/{id}",
@@ -950,6 +982,46 @@
   },
   {
     "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.TurnosController",
+    "Method": "CambioTurnos",
+    "RelativePath": "api/Turnos/CambioTurnos",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "turnoCambio",
+        "Type": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.TurnoCambio",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 400
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.TurnosController",
     "Method": "DeleteTurnos",
     "RelativePath": "api/Turnos/DeleteTurnos/{id}",
     "HttpMethod": "DELETE",
@@ -1263,7 +1335,38 @@
   },
   {
     "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.UsuariosController",
-    "Method": "GuardarCalendarioCompleto",
+    "Method": "PostUsuariosListado",
+    "RelativePath": "api/Usuarios/PostEstudiantesListado",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "System.Collections.Generic.List\u00601[[APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.UsuarioEstudianteRegistro, APLICATIVO-FACULTAD-DE-DERECHO-BACK, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.UsuariosController",
+    "Method": "PostUsuarios",
     "RelativePath": "api/Usuarios/PostUsuarioEstudiante",
     "HttpMethod": "POST",
     "IsController": true,

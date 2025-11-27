@@ -15,7 +15,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories
             this.context = context;
         }
 
-
+         
         public async Task<List<Calendarios>> GetCalendarios()
         {
             var data = await context.Calendarios.ToListAsync();

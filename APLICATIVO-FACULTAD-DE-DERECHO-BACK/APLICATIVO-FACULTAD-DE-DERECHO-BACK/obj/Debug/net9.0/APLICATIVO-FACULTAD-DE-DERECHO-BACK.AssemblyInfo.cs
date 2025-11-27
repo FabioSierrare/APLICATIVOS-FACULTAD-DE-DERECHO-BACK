@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("APLICATIVO-FACULTAD-DE-DERECHO-BACK")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+192b810dad7508cfb035a74cc8240399d0da214f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b70795bd04ff1ea9228723e36cd8b052d7ec4ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("APLICATIVO-FACULTAD-DE-DERECHO-BACK")]
 [assembly: System.Reflection.AssemblyTitleAttribute("APLICATIVO-FACULTAD-DE-DERECHO-BACK")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

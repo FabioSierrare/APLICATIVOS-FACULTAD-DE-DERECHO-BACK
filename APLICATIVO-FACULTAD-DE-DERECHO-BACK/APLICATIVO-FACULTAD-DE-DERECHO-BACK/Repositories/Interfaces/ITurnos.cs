@@ -7,6 +7,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces
         Task<List<Turnos>> GetTurnos();
         Task<bool> PostTurnos(Turnos turnos);
         Task<bool> PutTurnos(Turnos turnos);
+        Task<bool> CambioTurnos(List<TurnosId> id, List<UsuarioId> userid);
         Task<bool> DeleteTurnos(int id);
     }
 }

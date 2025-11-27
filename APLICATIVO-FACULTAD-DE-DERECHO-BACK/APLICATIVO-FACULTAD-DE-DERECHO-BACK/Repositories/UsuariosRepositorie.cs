@@ -85,6 +85,71 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories
             }
         }
 
+        public async Task<bool> PostUsuariosListado(List<UsuarioEstudianteRegistro> usuarios)
+        {
+            using var transaction = await context.Database.BeginTransactionAsync();
+
+            try
+            {
+                foreach (var user in usuarios)
+                {
+                    //Desgloso el usuario y el consultorio
+                    var usuario = user.Usuarios;
+                    var consultorio = user.Consultorio;
+
+                    var existeUsuario = await context.Usuarios
+                        .FirstOrDefaultAsync(u => u.Documento == usuario.Documento);
+
+                    if (existeUsuario != null)
+                    {
+                        //Se actualizan los datos del usuario existente
+                        existeUsuario.Correo = usuario.Correo;
+                        existeUsuario.Contrasena = usuario.Contrasena;
+                        existeUsuario.Nombre = usuario.Nombre;
+                        existeUsuario.TipoDocumentoId = usuario.TipoDocumentoId;
+
+                        //Actualizar usuario
+                        context.Usuarios.Update(existeUsuario);
+
+                        //Se busca si el usuario ya tiene un consultorio asignado
+                        var consultorioExiste = await context.UsuarioConsultorio
+                            .FirstOrDefaultAsync(uc => uc.UsuarioId == existeUsuario.Id);
+
+                        //Si ya tiene un consultorio, se actualiza de lo contrario se crea
+                        if (consultorioExiste != null)
+                        {
+                            consultorioExiste.ConsultorioId = consultorio.ConsultorioId;
+                            context.UsuarioConsultorio.Update(consultorioExiste);
+                        }
+                        else
+                        {
+                            consultorio.UsuarioId = existeUsuario.Id;
+                            await context.UsuarioConsultorio.AddAsync(consultorio);
+                        }
+
+                        continue;
+                    }
+
+                    await context.Usuarios.AddAsync(usuario);
+                    await context.SaveAsync();
+
+                    consultorio.UsuarioId = usuario.Id;
+                    await context.UsuarioConsultorio.AddAsync(consultorio);
+
+                }
+
+                await context.SaveAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // ❌ Revertir cambios si algo falla
+                await transaction.RollbackAsync();
+                Console.WriteLine($"Error guardando datos: {ex.Message}");
+                return false;
+            }
+        }
 
     }
 }

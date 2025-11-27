@@ -99,5 +99,30 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+        [HttpPost("CambioTurnos")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> CambioTurnos([FromBody] TurnoCambio turnoCambio)
+        {
+            try
+            {
+                var exito = await _turnos.CambioTurnos(
+                    turnoCambio.TurnosId,
+                    turnoCambio.UsuarioId);
+
+                if (exito)
+                    return Ok("Se realizaron los cambios de turnos correctamente");
+                else
+                    return BadRequest("No se pudieron realizar los cambios de turnos");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
     }
 }

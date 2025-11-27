@@ -25,6 +25,8 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK
             services.AddScoped<ILimitesTurnosConsultorioRepositorie, LimitesTurnosConsultorioRepositorie>();
             services.AddScoped<IUsuariosConsultorios, UsuariosConsultoriosRepositorie>();
             services.AddScoped<IRol, RolRepositorie>();
+            services.AddScoped<ICorreo, CorreoRepositorie>();
+
 
             return services;
         }

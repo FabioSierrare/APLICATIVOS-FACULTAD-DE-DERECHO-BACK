@@ -120,7 +120,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
         [HttpPost("PostUsuarioEstudiante")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GuardarCalendarioCompleto([FromBody] UsuarioEstudianteRegistro request)
+        public async Task<IActionResult> PostUsuarios([FromBody] UsuarioEstudianteRegistro request)
         {
             try
             {
@@ -128,6 +128,28 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
                 request.Usuarios,
                 request.Consultorio
             );
+
+                if (exito)
+                    return Ok("Datos guardados correctamente.");
+                else
+                    return BadRequest("Error guardando datos.");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
+
+        [HttpPost("PostEstudiantesListado")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PostUsuariosListado([FromBody] List<UsuarioEstudianteRegistro> request)
+        {
+            try
+            {
+                var exito = await _usuarios.PostUsuariosListado(request);
 
                 if (exito)
                     return Ok("Datos guardados correctamente.");
