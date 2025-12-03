@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK;
 
+AppContext.SetSwitch("System.Net.DontEnableSystemDefaultTlsVersions", false);
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+AppContext.SetSwitch("System.Net.DisableIPv6", true);
 var builder = WebApplication.CreateBuilder(args);
 
 // Necesario para Render
