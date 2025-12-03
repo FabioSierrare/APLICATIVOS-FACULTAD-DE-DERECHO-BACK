@@ -9,35 +9,51 @@ using APLICATIVO_FACULTAD_DE_DERECHO_BACK;
 AppContext.SetSwitch("System.Net.DontEnableSystemDefaultTlsVersions", false);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("System.Net.DisableIPv6", true);
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Necesario para Render
-builder.WebHost.UseUrls("http://0.0.0.0:" + (Environment.GetEnvironmentVariable("PORT") ?? "8080"));
+// Render expone el puerto en la variable PORT
+builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
 
+// Registrar servicios propios
 builder.Services.AddExternal(builder.Configuration);
 
+// Conexión a PostgreSQL Supabase
 builder.Services.AddDbContext<ContextFacultadDerecho>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+// Controllers
 builder.Services.AddControllers();
 
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend",
-        policy => policy
+    options.AddPolicy("AllowFrontend", policy =>
+        policy
             .AllowAnyOrigin()
             .AllowAnyHeader()
-            .AllowAnyMethod());
+            .AllowAnyMethod()
+    );
 });
 
 var app = builder.Build();
 
+// Habilitar Swagger solo si estás en Development
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseCors("AllowFrontend");
 
 app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
