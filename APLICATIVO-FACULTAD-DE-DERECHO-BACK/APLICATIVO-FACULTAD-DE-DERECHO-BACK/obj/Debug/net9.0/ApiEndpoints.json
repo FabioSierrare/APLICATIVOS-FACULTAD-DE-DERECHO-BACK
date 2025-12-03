@@ -1270,6 +1270,37 @@
   },
   {
     "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.UsuariosController",
+    "Method": "GetInfoUser",
+    "RelativePath": "api/Usuarios/GetInfoUser/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.UsuariosController",
     "Method": "GetUsuarioById",
     "RelativePath": "api/Usuarios/GetUsuarioById/{id}",
     "HttpMethod": "GET",
@@ -1406,6 +1437,42 @@
       {
         "Name": "usuarios",
         "Type": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.Usuarios",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      },
+      {
+        "Type": "Microsoft.AspNetCore.Mvc.ProblemDetails",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 404
+      }
+    ]
+  },
+  {
+    "ContainingType": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers.UsuariosController",
+    "Method": "PutUsuarioEstudiante",
+    "RelativePath": "api/Usuarios/PutUsuarioEstudiante/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model.UsuarioEstudianteRegistro",
+        "IsRequired": true
+      },
+      {
+        "Name": "id",
+        "Type": "",
         "IsRequired": true
       }
     ],

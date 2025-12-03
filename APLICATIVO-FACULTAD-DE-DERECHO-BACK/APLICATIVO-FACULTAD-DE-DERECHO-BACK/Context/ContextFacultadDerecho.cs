@@ -1,5 +1,7 @@
 ﻿using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context
 {

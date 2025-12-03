@@ -151,5 +151,54 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories
             }
         }
 
+        public async Task<InfoUser> GetInfoUser(int id)
+        {
+            var infoUser = new InfoUser();
+            infoUser.usuario = GetUsuarioById(id).Result;
+
+            infoUser.turno = await context.Turnos
+                .Where(t => t.UsuarioId == id)
+                .ToListAsync();
+
+            infoUser.tipoDocumento = await context.TiposDocumento.ToListAsync(); 
+            infoUser.consultorioInfo = await context.Consultorios.ToListAsync();
+            infoUser.consultorioId = await context.UsuarioConsultorio
+                .Where(uc => uc.UsuarioId == id)
+                .Select(uc => uc.ConsultorioId)
+                .FirstOrDefaultAsync();
+
+            return infoUser;
+        }
+
+        public async Task<bool> PutUsuarioEstudiante(Usuarios usuarios, UsuarioConsultorio consultorio)
+        {
+            using var transaction = await context.Database.BeginTransactionAsync();
+
+            try
+            {
+                // 1️⃣ Actualiza Usuario primero
+                context.Usuarios.Update(usuarios);
+
+                // 2️⃣ Guardar Consultorio al cual pertenece el usuario (independiente)
+                // 2️⃣ Guardar Consultorio
+                var idconsultorio = await context.UsuarioConsultorio.Where(ct => ct.UsuarioId == consultorio.UsuarioId).Select(ct => ct.Id).FirstOrDefaultAsync();
+                consultorio.Id = idconsultorio;
+                context.UsuarioConsultorio.Update(consultorio);
+                await context.SaveAsync();
+
+
+                // 3️⃣ Guardar configuración de días (usando calendario.Id)
+                // ✅ Confirmar transacción
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                // ❌ Revertir cambios si algo falla
+                await transaction.RollbackAsync();
+                Console.WriteLine($"Error guardando datos: {ex.Message}");
+                return false;
+            }
+        }
     }
 }

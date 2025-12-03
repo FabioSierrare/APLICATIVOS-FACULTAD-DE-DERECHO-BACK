@@ -13,8 +13,9 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK
             string connectionString = _configuration["ConnectionStrings:SQLConnectionStrings"];
 
             // Registrar el DbContext para la base de datos
-            services.AddDbContext<ContextFacultadDerecho>(options => options.UseSqlServer(connectionString));
 
+            services.AddDbContext<ContextFacultadDerecho>(options =>
+                options.UseNpgsql(connectionString));
             // Registrar interfaces sin el sufijo Repository
             services.AddScoped<ICalendarios, CalendarioRepositorie>();
             services.AddScoped<IConfiguracionDias, ConfiguracionDiasRepositorie>();

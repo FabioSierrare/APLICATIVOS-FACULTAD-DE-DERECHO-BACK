@@ -12,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddExternal(builder.Configuration);
 // 🔗 Conexión a base de datos
 builder.Services.AddDbContext<ContextFacultadDerecho>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
 
 
 

@@ -163,5 +163,46 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
             }
 
         }
+
+        [HttpGet("GetInfoUser/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetInfoUser(int id)
+        {
+            try
+            {
+                var response = await _usuarios.GetInfoUser(id);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("PutUsuarioEstudiante/{id}")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> PutUsuarioEstudiante([FromBody] UsuarioEstudianteRegistro request)
+        {
+            try
+            {
+                var exito = await _usuarios.PutUsuarioEstudiante(
+                request.Usuarios,
+                request.Consultorio
+            );
+
+                if (exito)
+                    return Ok("Datos actualizados correctamente.");
+                else
+                    return BadRequest("Error al actualizar los datos.");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces
         Task<Usuarios> GetUsuarioById(int id);
         Task<bool> PostUsuarios(Usuarios usuario, UsuarioConsultorio consultorio);
         Task<bool> PostUsuariosListado(List<UsuarioEstudianteRegistro> usuarios);
+        Task<InfoUser> GetInfoUser(int id);
+        Task<bool> PutUsuarioEstudiante(Usuarios usuario, UsuarioConsultorio consultorio);
     }
 }
