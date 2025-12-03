@@ -11,13 +11,10 @@ AppContext.SetSwitch("System.Net.DisableIPv6", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ❌ IMPORTANTE: NO usar UseUrls aquí, Render se lo pasa por Docker
-// builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
-
-// Registrar servicios externos
+// Registrar servicios externos (JWT, Email, etc.)
 builder.Services.AddExternal(builder.Configuration);
 
-// Conexión PostgreSQL Supabase
+// Conexión PostgreSQL Neon
 builder.Services.AddDbContext<ContextFacultadDerecho>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -42,7 +39,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Swagger solo en modo Development
+// Swagger solo en Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -54,5 +51,9 @@ app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Usar el puerto dinámico que Render asigna
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+app.Urls.Add($"http://0.0.0.0:{port}");
 
 app.Run();
