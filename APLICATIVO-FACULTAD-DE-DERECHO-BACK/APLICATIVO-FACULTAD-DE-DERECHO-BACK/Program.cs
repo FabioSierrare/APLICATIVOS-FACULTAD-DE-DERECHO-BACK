@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK;
@@ -12,13 +11,13 @@ AppContext.SetSwitch("System.Net.DisableIPv6", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Render expone el puerto en la variable PORT
-builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
+// ❌ IMPORTANTE: NO usar UseUrls aquí, Render se lo pasa por Docker
+// builder.WebHost.UseUrls($"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "8080"}");
 
-// Registrar servicios propios
+// Registrar servicios externos
 builder.Services.AddExternal(builder.Configuration);
 
-// Conexión a PostgreSQL Supabase
+// Conexión PostgreSQL Supabase
 builder.Services.AddDbContext<ContextFacultadDerecho>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -43,7 +42,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Habilitar Swagger solo si estás en Development
+// Swagger solo en modo Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
