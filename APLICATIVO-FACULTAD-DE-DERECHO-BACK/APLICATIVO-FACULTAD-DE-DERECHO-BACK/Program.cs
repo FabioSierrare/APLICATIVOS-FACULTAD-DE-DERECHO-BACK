@@ -9,7 +9,6 @@ using Hangfire.PostgreSql;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.security;
 using QuestPDF.Infrastructure;
 
-
 AppContext.SetSwitch("System.Net.DontEnableSystemDefaultTlsVersions", false);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 AppContext.SetSwitch("System.Net.DisableIPv6", true);
@@ -17,6 +16,7 @@ AppContext.SetSwitch("System.Net.DisableIPv6", true);
 var builder = WebApplication.CreateBuilder(args);
 
 QuestPDF.Settings.License = LicenseType.Community;
+
 //
 // ===================== SERVICIOS =====================
 //
@@ -24,14 +24,14 @@ QuestPDF.Settings.License = LicenseType.Community;
 // Servicios externos (JWT, Email, etc.)
 builder.Services.AddExternal(builder.Configuration);
 
-// PostgreSQL
+// PostgreSQL principal
 builder.Services.AddDbContext<ContextFacultadDerecho>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
 
-// Controllers
+// Controllers + Swagger
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -74,6 +74,16 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod()
     );
+
+    options.AddPolicy("FrontendProd", policy =>
+        policy
+            .WithOrigins(
+                "https://turnosconsultorioupkt.cloud",
+                "https://www.turnosconsultorioupkt.cloud"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+    );
 });
 
 //
@@ -92,11 +102,6 @@ builder.Services.AddHangfire(config =>
 builder.Services.AddHangfireServer();
 builder.Services.AddScoped<HorarioPdfJob>();
 
-
-
-
-
-
 var app = builder.Build();
 
 //
@@ -109,6 +114,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.UseCors("FrontendDev");
 }
+else
+{
+    app.UseCors("FrontendProd");
+}
 
 // 🔐 ORDEN CRÍTICO
 app.UseAuthentication();
@@ -120,17 +129,15 @@ app.UseHangfireDashboard("/hangfire", new DashboardOptions
     Authorization = new[] { new HangfireAuthFilter() }
 });
 
+// Controllers
 app.MapControllers();
 
-
-app.MapControllers();
-
+// ===================== JOB PROGRAMADO =====================
 RecurringJob.AddOrUpdate<HorarioPdfJob>(
     "envio-horario-semanal",
     job => job.Ejecutar(),
-    "6 6 * * 1", // Viernes 10:00 AM
-    TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time") // Colombia
+    "11 1 * * 2", // Jueves 12 PM Colombia
+    TimeZoneInfo.FindSystemTimeZoneById("America/Bogota")
 );
-
 
 app.Run();
