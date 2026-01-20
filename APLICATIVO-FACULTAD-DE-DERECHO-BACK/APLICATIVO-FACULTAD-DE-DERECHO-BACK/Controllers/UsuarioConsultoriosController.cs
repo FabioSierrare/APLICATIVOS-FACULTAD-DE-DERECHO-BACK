@@ -22,7 +22,6 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
             var sw = Stopwatch.StartNew();
             var data = await usuariosConsultorios.GetUsuariosConsultorios();
             sw.Stop();
-            Console.WriteLine($"GetUsuariosConsultorios executed in {sw.ElapsedMilliseconds} ms");
             return Ok(data);
         }
 

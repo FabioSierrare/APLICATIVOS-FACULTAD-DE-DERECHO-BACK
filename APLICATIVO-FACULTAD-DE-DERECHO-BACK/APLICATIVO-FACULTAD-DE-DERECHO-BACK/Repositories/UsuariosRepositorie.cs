@@ -23,6 +23,12 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories
             return data;
         }
 
+        public async Task<List<Usuarios>> GetUsuariosProfesores()
+        {
+            var data = await context.Usuarios.Where(u => u.RolId == 3).ToListAsync();
+            return data;
+        }
+
         public async Task<bool> PostUsuarios(Usuarios usuarios)
         {
             await context.Usuarios.AddAsync(usuarios);

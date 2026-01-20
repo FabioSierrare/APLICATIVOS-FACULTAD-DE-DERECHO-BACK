@@ -6,5 +6,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces
     {
         Task<bool> EnviarCorreo(Correo correo);                 // Envío de un solo correo
         Task<bool> EnviarCorreosMasivos(List<Correo> correos);
+        Task<bool> EnviarMismoCorreoMasivo(CorreoMasivo correoMasivo);
+
     }
 }

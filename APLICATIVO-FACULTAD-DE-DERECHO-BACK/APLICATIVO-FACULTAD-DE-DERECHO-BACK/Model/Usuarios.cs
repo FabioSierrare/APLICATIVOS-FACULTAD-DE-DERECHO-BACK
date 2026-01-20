@@ -13,5 +13,6 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model
         public int RolId { get; set; }
         [JsonIgnore]
         public Rol? Rol { get; set; }
+        
     }
 }

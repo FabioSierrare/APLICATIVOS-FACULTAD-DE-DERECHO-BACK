@@ -41,6 +41,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 
             var claims = new List<Claim>
             {
+                new Claim(ClaimTypes.Role, usuario.Rol.Nombre),
                 new Claim("Correo", usuario.Correo),
                 new Claim("Rol", usuario.Rol.Nombre), // Nombre del rol desde la FK
                 new Claim("Id", usuario.Id.ToString())

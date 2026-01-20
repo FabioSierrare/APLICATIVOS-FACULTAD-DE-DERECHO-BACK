@@ -19,7 +19,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context
         public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Rol> Rol { get; set; }
         public DbSet<LimitesTurnosConsultorio> LimitesTurnosConsultorio { get; set; }
-
+        public DbSet<ConsultorioProfesores> ConsultorioProfesores { get; set; }
         // 🔹 EF Core llamará aquí y nosotros invocamos tu configuración
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -103,6 +103,15 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Context
             modelBuilder.Entity<LimitesTurnosConsultorio>().Property(u => u.CalendarioId).HasColumnName("CalendarioId");
             modelBuilder.Entity<LimitesTurnosConsultorio>().Property(u => u.ConsultorioId).HasColumnName("ConsultorioId");
             modelBuilder.Entity<LimitesTurnosConsultorio>().Property(u => u.LimiteTurnos).HasColumnName("LimiteTurnos");
+
+
+            modelBuilder.Entity<ConsultorioProfesores>().ToTable("ConsultorioProfesores");
+            modelBuilder.Entity<ConsultorioProfesores>().HasKey(u => u.Id);
+            modelBuilder.Entity<ConsultorioProfesores>().Property(u => u.Id).HasColumnName("Id").ValueGeneratedOnAdd();
+            modelBuilder.Entity<ConsultorioProfesores>().Property(u => u.ProfesorId).HasColumnName("ProfesorId");
+            modelBuilder.Entity<ConsultorioProfesores>().Property(u => u.CalendarioId).HasColumnName("CalendarioId");
+            modelBuilder.Entity<ConsultorioProfesores>().Property(u => u.DiaSemana).HasColumnName("DiaSemana");
+            modelBuilder.Entity<ConsultorioProfesores>().Property(u => u.Jornada).HasColumnName("Jornada");
         }
 
         public async Task<bool> SaveAsync()

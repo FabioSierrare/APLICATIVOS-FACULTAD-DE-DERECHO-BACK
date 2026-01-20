@@ -2,11 +2,13 @@
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces;
 using APLICATIVO_FACULTAD_DE_DERECHO_BACK.Model;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
     public class TurnosController : Controller
     {
         public readonly ITurnos _turnos;

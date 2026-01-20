@@ -5,6 +5,7 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Repositories.Interfaces
     public interface IUsuarios
     {
         Task<List<Usuarios>> GetUsuarios();
+        Task<List<Usuarios>> GetUsuariosProfesores();
         Task<bool> PostUsuarios(Usuarios usuario);
         Task<bool> PutUsuarios(Usuarios usuario);
         Task<bool> DeleteUsuarios(int id);

@@ -30,6 +30,17 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
             return Ok(response);
         }
 
+
+        [HttpGet("GetUsuariosProfesores")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetUsuariosProfesores()
+        {
+            var response = await _usuarios.GetUsuariosProfesores();
+            return Ok(response);
+        }
+
         [HttpPost("PostUsuarios")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

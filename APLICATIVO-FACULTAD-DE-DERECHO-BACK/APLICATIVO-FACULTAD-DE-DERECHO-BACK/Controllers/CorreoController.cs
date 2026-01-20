@@ -36,5 +36,18 @@ namespace APLICATIVO_FACULTAD_DE_DERECHO_BACK.Controllers
             else
                 return BadRequest("Error al enviar los correos");
         }
+
+        [HttpPost("EnviarCorreoMasivoMismoContenido")]
+        public async Task<IActionResult> EnviarCorreoMasivoMismoContenido(
+             [FromBody] CorreoMasivo correoMasivo)
+        {
+            var enviado = await _correoRepository.EnviarMismoCorreoMasivo(correoMasivo);
+
+            if (enviado)
+                return Ok("Correo masivo enviado exitosamente");
+            else
+                return BadRequest("Error al enviar el correo masivo");
+        }
+
     }
 }
